@@ -1,0 +1,18 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity motor is
+    port(
+        clk, asc, cs: in std_logic;
+        snl : out std_logic_vector(3 downto 0)
+    );
+end entity;
+
+architecture arq of motor is    
+signal clkl : std_logic;
+signal state : std_logic_vector(1 downto 0);
+begin
+u1 : entity work.divf(arqdivf) generic map(250000) port map(clk,clkl);
+u2 : entity work.states(arqstates) port map(clkl,asc,state);
+u3 : entity work.ROM(arqrom) port map(state,cs,snl);
+end arq;
